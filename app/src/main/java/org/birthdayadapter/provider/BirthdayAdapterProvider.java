@@ -20,8 +20,6 @@
 
 package org.birthdayadapter.provider;
 
-import java.util.Arrays;
-
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
@@ -34,10 +32,11 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
-
 import org.birthdayadapter.BuildConfig;
 import org.birthdayadapter.util.Constants;
 import org.birthdayadapter.util.Log;
+
+import java.util.Arrays;
 
 public class BirthdayAdapterProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
@@ -189,10 +188,6 @@ public class BirthdayAdapterProvider extends ContentProvider {
     /**
      * Build default selection statement. If no extra selection is specified only build where clause
      * with rowId
-     *
-     * @param uri
-     * @param selection
-     * @return
      */
     private String buildDefaultSelection(Uri uri, String selection) {
         String rowId = uri.getPathSegments().get(1);

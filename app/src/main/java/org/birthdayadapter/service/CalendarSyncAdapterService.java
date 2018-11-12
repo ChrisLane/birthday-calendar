@@ -335,8 +335,8 @@ public class CalendarSyncAdapterService extends Service {
                 eventDate = parseStringWithSimpleDateFormat(eventDateString, "yyyy.MM.dd", false);
             }
 
-            /**
-             * Prefer dd/MM/yyyy over MM/dd/yyyy ?
+            /*
+              Prefer dd/MM/yyyy over MM/dd/yyyy ?
              */
             if (PreferencesHelper.getPreferddSlashMM(context)) {
                 // dd/MM/yyyy
