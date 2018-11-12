@@ -109,8 +109,8 @@ public class ReminderPreferenceCompat extends Preference {
         View view = inflater.inflate(R.layout.pref_reminder, null);
         alert.setView(view);
 
-        spinner = (Spinner) view.findViewById(R.id.pref_reminder_spinner);
-        picker = (TimePicker) view.findViewById(R.id.pref_reminder_timepicker);
+        spinner = view.findViewById(R.id.pref_reminder_spinner);
+        picker = view.findViewById(R.id.pref_reminder_timepicker);
 
         // populate spinner with entries
         ArrayAdapter<CharSequence> dataAdapter = ArrayAdapter.createFromResource(getContext(),

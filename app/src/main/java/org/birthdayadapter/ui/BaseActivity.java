@@ -51,14 +51,14 @@ public class BaseActivity extends AppCompatActivity implements BackgroundStatusH
 
         setContentView(R.layout.base_activity);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        progressBar = (ProgressBar) findViewById(R.id.progress_spinner);
+        progressBar = findViewById(R.id.progress_spinner);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         mySharedPreferenceChangeListener = new MySharedPreferenceChangeListener(this,

@@ -41,10 +41,10 @@ public class AboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about_fragment, container, false);
 
-        TextView versionText = (TextView) view.findViewById(R.id.about_version);
+        TextView versionText = view.findViewById(R.id.about_version);
         versionText.setText(getString(R.string.about_version) + " " + getVersion());
 
-        HtmlTextView aboutTextView = (HtmlTextView) view.findViewById(R.id.about_text);
+        HtmlTextView aboutTextView = view.findViewById(R.id.about_text);
 
         // load html into textview
         aboutTextView.setHtml(R.raw.about);

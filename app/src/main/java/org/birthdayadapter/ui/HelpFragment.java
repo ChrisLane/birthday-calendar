@@ -35,7 +35,7 @@ public class HelpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.help_fragment, container, false);
 
-        HtmlTextView text = (HtmlTextView) view.findViewById(R.id.help_text);
+        HtmlTextView text = view.findViewById(R.id.help_text);
 
         // load html into textview
         text.setHtml(R.raw.help);
