@@ -21,12 +21,10 @@
 package org.birthdayadapter.ui;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.ContactsContract;
@@ -132,26 +130,25 @@ public class BasePreferenceFragment extends PreferenceFragmentCompat {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     private boolean hasPermissions() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true;
-        }
-
-        // check Android 6 permission
         int contactsPerm = ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.READ_CONTACTS);
         int calendarPerm = ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.READ_CALENDAR);
+        int calenderWritePerm = ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_CALENDAR);
 
         if (contactsPerm == PackageManager.PERMISSION_GRANTED
-                && calendarPerm == PackageManager.PERMISSION_GRANTED) {
+                && calendarPerm == PackageManager.PERMISSION_GRANTED
+                && calenderWritePerm == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
             requestPermissions(
                     new String[]{
                             Manifest.permission.READ_CONTACTS,
-                            Manifest.permission.READ_CALENDAR},
+                            Manifest.permission.READ_CALENDAR,
+                            Manifest.permission.WRITE_CALENDAR
+                    },
                     MY_PERMISSIONS_REQUEST);
             return false;
         }
