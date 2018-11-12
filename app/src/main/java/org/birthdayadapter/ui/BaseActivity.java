@@ -20,8 +20,6 @@
 
 package org.birthdayadapter.ui;
 
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -32,16 +30,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
-
-import org.birthdayadapter.BuildConfig;
 import org.birthdayadapter.R;
 import org.birthdayadapter.util.BackgroundStatusHandler;
 import org.birthdayadapter.util.MySharedPreferenceChangeListener;
-import org.birthdayadapter.util.PreferencesHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class BaseActivity extends AppCompatActivity implements BackgroundStatusHandler.StatusChangeListener {
 
@@ -69,20 +63,6 @@ public class BaseActivity extends AppCompatActivity implements BackgroundStatusH
 
         mySharedPreferenceChangeListener = new MySharedPreferenceChangeListener(this,
                 mBackgroundStatusHandler);
-
-        /*
-         * Show workaround dialog for Android bug http://code.google.com/p/android/issues/detail?id=34880
-         * Bug exists on Android 4.1 (SDK 16) and on some phones like Galaxy S4
-         */
-        if (BuildConfig.GOOGLE_PLAY_VERSION && PreferencesHelper.getShowWorkaroundDialog(this)
-                && !isPackageInstalled("org.birthdayadapter.jb.workaround")) {
-            if ((Build.VERSION.SDK_INT == 16)
-                    || Build.DEVICE.toUpperCase(Locale.US).startsWith("GT-I9000")
-                    || Build.DEVICE.toUpperCase(Locale.US).startsWith("GT-I9500")) {
-                InstallWorkaroundDialogFragment dialog = InstallWorkaroundDialogFragment.newInstance();
-                dialog.show(getSupportFragmentManager(), "workaroundDialog");
-            }
-        }
     }
 
     public void setIndeterminateProgress(boolean visible) {
@@ -131,16 +111,6 @@ public class BaseActivity extends AppCompatActivity implements BackgroundStatusH
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-    }
-
-    public boolean isPackageInstalled(String targetPackage) {
-        PackageManager pm = getPackageManager();
-        try {
-            pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA);
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-        return true;
     }
 
 }
