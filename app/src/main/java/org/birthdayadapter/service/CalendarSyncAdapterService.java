@@ -25,15 +25,7 @@ import android.accounts.Account;
 import android.accounts.OperationCanceledException;
 import android.annotation.SuppressLint;
 import android.app.Service;
-import android.content.AbstractThreadedSyncAdapter;
-import android.content.ContentProviderClient;
-import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SyncResult;
+import android.content.*;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.MatrixCursor;
@@ -50,8 +42,6 @@ import android.provider.CalendarContract.Reminders;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.text.format.Time;
-
 import org.birthdayadapter.BuildConfig;
 import org.birthdayadapter.R;
 import org.birthdayadapter.provider.ProviderHelper;
@@ -62,12 +52,7 @@ import org.birthdayadapter.util.PreferencesHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 @SuppressLint("NewApi")
 public class CalendarSyncAdapterService extends Service {
@@ -633,7 +618,7 @@ public class CalendarSyncAdapterService extends Service {
                 new String[]{String.valueOf(getCalendar(context))}, null);
         int eventIdColumn = eventsCursor.getColumnIndex(Events._ID);
 
-        ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
+        ArrayList<ContentProviderOperation> operationList = new ArrayList<>();
 
         Uri remindersUri = getBirthdayAdapterUri(Reminders.CONTENT_URI);
 

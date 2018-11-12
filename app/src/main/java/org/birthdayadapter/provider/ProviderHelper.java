@@ -53,7 +53,7 @@ public class ProviderHelper {
     }
 
     public static HashSet<Account> getAccountBlacklist(Context context) {
-        HashSet<Account> hashSet = new HashSet<Account>();
+        HashSet<Account> hashSet = new HashSet<>();
         Cursor cursor = getAccountBlacklistCursor(context, null, null);
 
         try {

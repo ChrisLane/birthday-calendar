@@ -74,28 +74,18 @@ public class InstallWorkaroundDialogFragment extends DialogFragment {
         alert.setCancelable(true);
         alert.setIcon(android.R.drawable.ic_dialog_info);
 
-        alert.setNegativeButton(R.string.workaround_dialog_close_button, new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dismiss();
-            }
+        alert.setNegativeButton(R.string.workaround_dialog_close_button, (dialogInterface, i) -> dismiss());
+        alert.setNeutralButton(R.string.workaround_dialog_dont_show_again_button, (dialogInterface, i) -> {
+            PreferencesHelper.setShowWorkaroundDialog(getActivity(), false);
+            dismiss();
         });
-        alert.setNeutralButton(R.string.workaround_dialog_dont_show_again_button, new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                PreferencesHelper.setShowWorkaroundDialog(getActivity(), false);
-                dismiss();
-            }
-        });
-        alert.setPositiveButton(R.string.workaround_dialog_install_button, new OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                String workaroundName = "org.birthdayadapter.jb.workaround";
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + workaroundName)));
-                } catch (ActivityNotFoundException anfe) {
-                    // No Google Play installed? Weird! Try with browser!
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + workaroundName)));
-                }
+        alert.setPositiveButton(R.string.workaround_dialog_install_button, (dialog, which) -> {
+            String workaroundName = "org.birthdayadapter.jb.workaround";
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + workaroundName)));
+            } catch (ActivityNotFoundException anfe) {
+                // No Google Play installed? Weird! Try with browser!
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + workaroundName)));
             }
         });
         return alert.create();

@@ -21,7 +21,6 @@
 package org.birthdayadapter.ui;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -36,7 +35,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.SwitchPreferenceCompat;
-
 import org.birthdayadapter.R;
 import org.birthdayadapter.util.AccountHelper;
 import org.birthdayadapter.util.Constants;
@@ -74,47 +72,35 @@ public class BasePreferenceFragment extends PreferenceFragmentCompat {
         }
 
         mEnabled = (SwitchPreferenceCompat) findPreference(getString(R.string.pref_enabled_key));
-        mEnabled.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (newValue instanceof Boolean) {
-                    Boolean boolVal = (Boolean) newValue;
+        mEnabled.setOnPreferenceChangeListener((preference, newValue) -> {
+            if (newValue instanceof Boolean) {
+                Boolean boolVal = (Boolean) newValue;
 
-                    if (boolVal) {
-                        addAccountAndSync();
-                    } else {
-                        mAccountHelper.removeAccount();
-                    }
+                if (boolVal) {
+                    addAccountAndSync();
+                } else {
+                    mAccountHelper.removeAccount();
                 }
-                return true;
             }
+            return true;
         });
 
         Preference openContacts = findPreference(getString(R.string.pref_contacts_key));
-        openContacts.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
-                startActivity(intent);
-                return true;
-            }
+        openContacts.setOnPreferenceClickListener(preference -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
+            startActivity(intent);
+            return true;
         });
 
         Preference openCalendar = findPreference(getString(R.string.pref_calendar_key));
-        openCalendar.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-
-            @SuppressLint("NewApi")
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
-                builder.appendPath("time");
-                ContentUris.appendId(builder, Calendar.getInstance().getTimeInMillis());
-                Intent intent = new Intent(Intent.ACTION_VIEW)
-                        .setData(builder.build());
-                startActivity(intent);
-                return true;
-            }
+        openCalendar.setOnPreferenceClickListener(preference -> {
+            Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+            builder.appendPath("time");
+            ContentUris.appendId(builder, Calendar.getInstance().getTimeInMillis());
+            Intent intent = new Intent(Intent.ACTION_VIEW)
+                    .setData(builder.build());
+            startActivity(intent);
+            return true;
         });
 
     }

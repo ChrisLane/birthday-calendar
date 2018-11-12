@@ -45,33 +45,27 @@ public class ExtendedPreferencesFragment extends PreferenceFragmentCompat {
 
         if (!BuildConfig.FULL_VERSION) {
             Preference buyFull = findPreference(getString(R.string.pref_buy_full_key));
-            buyFull.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    try {
-                        startActivity(new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("market://details?id=" + Constants.FULL_PACKAGE_NAME)));
-                    } catch (android.content.ActivityNotFoundException e) {
-                        startActivity(new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("http://play.google.com/store/apps/details?id="
-                                        + Constants.FULL_PACKAGE_NAME)));
-                    }
-
-                    return false;
+            buyFull.setOnPreferenceClickListener(preference -> {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=" + Constants.FULL_PACKAGE_NAME)));
+                } catch (android.content.ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id="
+                                    + Constants.FULL_PACKAGE_NAME)));
                 }
+
+                return false;
             });
         }
 
         mAccountHelper = new AccountHelper(mActivity, mActivity.mBackgroundStatusHandler);
 
         Preference forceSync = findPreference(getString(R.string.pref_force_sync_key));
-        forceSync.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                mAccountHelper.manualSync();
+        forceSync.setOnPreferenceClickListener(preference -> {
+            mAccountHelper.manualSync();
 
-                return false;
-            }
+            return false;
         });
     }
 

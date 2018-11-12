@@ -68,12 +68,10 @@ public class AccountListLoader extends AsyncTaskLoader<List<AccountListEntry>> {
     public List<AccountListEntry> loadInBackground() {
         // Retrieve all accounts that are actively used for contacts
         HashSet<Account> activeContactAccounts = new HashSet<>();
-        Cursor cursor = null;
-        try {
-            cursor = getContext().getContentResolver().query(
-                    ContactsContract.RawContacts.CONTENT_URI,
-                    new String[]{ContactsContract.RawContacts.ACCOUNT_NAME,
-                            ContactsContract.RawContacts.ACCOUNT_TYPE}, null, null, null);
+        try (Cursor cursor = getContext().getContentResolver().query(
+                ContactsContract.RawContacts.CONTENT_URI,
+                new String[]{ContactsContract.RawContacts.ACCOUNT_NAME,
+                        ContactsContract.RawContacts.ACCOUNT_TYPE}, null, null, null)) {
 
             if (cursor != null && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
@@ -87,10 +85,6 @@ public class AccountListLoader extends AsyncTaskLoader<List<AccountListEntry>> {
             }
         } catch (Exception e) {
             Log.e(Constants.TAG, "Error retrieving accounts!", e);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
 
         // get current blacklist from preferences

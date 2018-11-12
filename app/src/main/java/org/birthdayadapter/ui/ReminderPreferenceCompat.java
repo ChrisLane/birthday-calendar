@@ -123,17 +123,9 @@ public class ReminderPreferenceCompat extends Preference {
             picker.setIs24HourView(true);
         }
 
-        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                save(true);
-            }
-        });
-        alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        alert.setPositiveButton(android.R.string.ok, (dialogInterface, i) -> save(true));
+        alert.setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
 
-            }
         });
 
         bind();
