@@ -1,18 +1,20 @@
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:3.2.1'
     }
 }
 
 allprojects {
     repositories {
+        google()
         jcenter()
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.1'
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
