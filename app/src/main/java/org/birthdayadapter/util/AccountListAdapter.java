@@ -22,7 +22,6 @@ package org.birthdayadapter.util;
 
 import android.accounts.Account;
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +30,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import org.birthdayadapter.R;
 
 import java.util.HashSet;
@@ -51,13 +49,7 @@ public class AccountListAdapter extends ArrayAdapter<AccountListEntry> {
     public void setData(List<AccountListEntry> data) {
         clear();
         if (data != null) {
-            if (Build.VERSION.SDK_INT >= 11) {
-                addAll(data);
-            } else {
-                for (AccountListEntry entry : data) {
-                    add(entry);
-                }
-            }
+            addAll(data);
             this.data = data;
         }
     }

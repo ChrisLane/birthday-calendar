@@ -30,7 +30,6 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -240,16 +239,11 @@ public class CalendarSyncAdapterService extends Service {
 
         /*
          * Set availability to free.
-         * 
-         * Note: HTC calendar (4.0.3 Android + HTC Sense 4.0) will show a conflict with other events
-         * if availability is not set to free!
          */
-        if (Build.VERSION.SDK_INT >= 14) {
-            builder.withValue(Events.AVAILABILITY, Events.AVAILABILITY_FREE);
-        }
+        builder.withValue(Events.AVAILABILITY, Events.AVAILABILITY_FREE);
 
         // add button to open contact
-        if (Build.VERSION.SDK_INT >= 16 && lookupKey != null) {
+        if (lookupKey != null) {
             builder.withValue(Events.CUSTOM_APP_PACKAGE, context.getPackageName());
             Uri contactLookupUri = Uri.withAppendedPath(
                     ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey);
